@@ -16,13 +16,11 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const fs = require('fs')
-            fs.readdirSync('./').forEach(file => {
-              console.log(file);
-            });
+            const comment = fs.readFileSync('.github/workflows/checklist.md');
+            console.log(comment)
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: fs.readFileSync('.github/workflows/checklist.md')
+              body: comment 
             })
