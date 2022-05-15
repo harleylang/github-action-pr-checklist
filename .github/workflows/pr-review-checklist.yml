@@ -1,3 +1,5 @@
+# inspired from: https://stackoverflow.com/questions/58066966/commenting-a-pull-request-in-a-github-action
+# and: https://github.com/AlgebraicJulia/Catlab.jl/blob/master/.github/workflows/reviewchecklist.yml
 name: pr-review-checklist
 on:
   pull_request:
