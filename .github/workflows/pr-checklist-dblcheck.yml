@@ -8,10 +8,6 @@ jobs:
   task_checker:
     runs-on: ubuntu-latest
     name: PR checklist dblchecker
-    permissions:
-      # required, see: https://github.com/actions/first-interaction/issues/10#issuecomment-1085820129
-      issues: write
-      pull-requests: write
     steps:
       - uses: actions/github-script@v5
         with:
