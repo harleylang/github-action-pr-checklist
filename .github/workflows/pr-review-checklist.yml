@@ -15,8 +15,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(process.cwd());
             const fs = require('fs')
+            fs.readdirSync(testFolder).forEach(file => {
+              console.log(file);
+            });
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
