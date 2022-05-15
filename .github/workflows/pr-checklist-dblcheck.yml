@@ -10,30 +10,19 @@ on:
       - created
       - deleted
       - edited
-  issue_comment:
-    types:
-      - created
-      - deleted
-      - edited
+  issue_comment
 jobs:
   task_checker:
     runs-on: ubuntu-latest
     name: Pull request checkout dblchecker
     steps:
-      - uses: peter-evans/find-comment@v1
-        id: bot
+      - run: npm install dotenv
+      - uses: actions/github-script@v5
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
         with:
-          issue-number: ${{ github.event.number }}
-          body-includes: "<!-- GH BOT -->"
-
-      - name: Print Comment ID & Author
-        run: |
-          echo ${{ steps.bot.outputs.comment-id }}
-          echo ${{ steps.bot.outputs.comment-author }}
-
-      - uses: actions-ecosystem/action-regex-match@v2
-        id: description
-        with:
-          text: ${{ steps.bot.outputs.comment-body }}
-          regex: '^[A-Za-z_"]+:\s+.*$' #/(- \[[ ]\].+)/g
-          flags: m
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            require('dotenv').config();
+            const GITHUB_CONTEXT = JSON.parse(process.env.GITHUB_CONTEXT);
+            console.log(GITHUB_CONTEXT);
