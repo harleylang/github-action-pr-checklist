@@ -1,0 +1,23 @@
+asana-name: pr-review-checklist
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  review-checklist:
+    name: PR Review Checklist
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm install fs
+      - uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs')
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: fs.readFileSync('/.github/workflows/checklist.md')
+            })
