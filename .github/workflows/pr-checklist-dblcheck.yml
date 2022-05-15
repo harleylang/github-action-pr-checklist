@@ -18,9 +18,11 @@ on:
 jobs:
   task_checker:
     runs-on: ubuntu-latest
-    name: Check for tasks in pull requests
+    name: Pull request checkout dblchecker
     steps:
-      - name: Pull request task checker
-        uses: americanexpress/task-status-pr-checker@v1
+      - uses: actions/github-script@v5
         with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const GITHUB_CONTEXT = JSON.parse(process.env.GITHUB_CONTEXT);
+            console.log(GITHUB_CONTEXT);
