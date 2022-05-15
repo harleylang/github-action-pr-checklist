@@ -1,0 +1,22 @@
+name: pr-checklist-dblcheck
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+jobs:
+  task_checker:
+    runs-on: ubuntu-latest
+    name: PR checklist dblchecker
+    permissions:
+      # required, see: https://github.com/actions/first-interaction/issues/10#issuecomment-1085820129
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const body = context.payload.pull_request.body;
+            const checklistComplete = body.match(/(- \[[ ]\].+)/g) === null;
+            if (!checklistComplete) core.setFailed('Please complete all PR checklist items before merging.');
