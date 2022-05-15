@@ -10,8 +10,9 @@ jobs:
     name: PR Review Checklist
     runs-on: ubuntu-latest
     steps:
-      - run: npm install fs
       - uses: actions/checkout@v1
+      - uses: actions/github-script@v5
+      - run: npm install fs
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
