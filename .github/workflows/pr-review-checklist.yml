@@ -1,0 +1,29 @@
+name: pr-review-checklist
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  review-checklist:
+    name: PR Review Checklist
+    permissions:
+      # required, see: https://github.com/actions/first-interaction/issues/10#issuecomment-1085820129
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: npm install fs
+      - uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs')
+            const comment = fs.readFileSync('.github/workflows/pr-review-checklist.md', "utf8");
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment 
+            })
