@@ -6,3 +6,4 @@ Please include a summary of the change and which issue is fixed. Please also inc
 
 - [ ] Item 1
 - [ ] Item 2
+- [ ] Item 3
