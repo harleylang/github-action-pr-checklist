@@ -1,4 +1,4 @@
-asana-name: pr-review-checklist
+name: pr-review-checklist
 on:
   pull_request:
     types:
