@@ -3,17 +3,6 @@ name: pr-checklist-dblcheck
 on:
   pull_request:
     types:
-      - opened
-      - edited
-  pull_request_review_comment:
-    types:
-      - created
-      - deleted
-      - edited
-  issue_comment:
-    types:
-      - created
-      - deleted
       - edited
 jobs:
   task_checker:

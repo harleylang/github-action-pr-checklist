@@ -16,11 +16,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - run: npm install dotenv
       - run: npm install fs
       - uses: actions/github-script@v5
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            require('dotenv').config();
+            const GITHUB_CONTEXT = JSON.parse(process.env.GITHUB_CONTEXT);
+            console.log(GITHUB_CONTEXT);
             const fs = require('fs')
             const comment = fs.readFileSync('.github/workflows/pr-review-checklist.md', "utf8");
             github.rest.issues.createComment({
