@@ -1,4 +1,3 @@
-# from: https://github.com/americanexpress/task-status-pr-checker
 name: pr-checklist-dblcheck
 on:
   pull_request:
