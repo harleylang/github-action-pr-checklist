@@ -17,7 +17,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const fs = require('fs')
-            const comment = fs.readFileSync('.github/workflows/checklist.md', "utf8");
+            const comment = fs.readFileSync('.github/workflows/checklist.md', "utf8").toString();
             console.log(comment)
             github.rest.issues.createComment({
               issue_number: context.issue.number,
