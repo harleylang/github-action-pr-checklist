@@ -21,8 +21,11 @@ jobs:
     name: Pull request checkout dblchecker
     steps:
       - uses: actions/github-script@v5
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            require('dotenv').config();
             const GITHUB_CONTEXT = JSON.parse(process.env.GITHUB_CONTEXT);
             console.log(GITHUB_CONTEXT);
