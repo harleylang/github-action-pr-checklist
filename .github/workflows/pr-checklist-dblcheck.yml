@@ -8,7 +8,7 @@ on:
 jobs:
   task_checker:
     runs-on: ubuntu-latest
-    name: Pull request checkout dblchecker
+    name: PR checklist dblchecker
     permissions:
       # required, see: https://github.com/actions/first-interaction/issues/10#issuecomment-1085820129
       issues: write
@@ -18,8 +18,6 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(context);
             const body = context.payload.pull_request.body;
             const checklistComplete = body.match(/(- \[[ ]\].+)/g) === null;
-            console.log(checklistComplete);
-            if (!checklistComplete) core.setFailed('Whoops!');
+            if (!checklistComplete) core.setFailed('Please complete all PR checklist items before merging.');
