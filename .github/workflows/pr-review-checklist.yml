@@ -3,12 +3,12 @@ on:
   pull_request:
     types:
       - opened
-      - edited
 
 jobs:
   review-checklist:
     name: PR Review Checklist
     permissions:
+      # required, see: https://github.com/actions/first-interaction/issues/10#issuecomment-1085820129
       issues: write
       pull-requests: write
     runs-on: ubuntu-latest
@@ -20,8 +20,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const fs = require('fs')
-            const comment = fs.readFileSync('.github/workflows/checklist.md', "utf8");
-            console.log(comment)
+            const comment = fs.readFileSync('.github/workflows/pr-review-checklist.md', "utf8");
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
